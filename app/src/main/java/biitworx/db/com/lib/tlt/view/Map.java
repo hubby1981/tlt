@@ -63,7 +63,9 @@ public class Map extends View {
     private Bitmap brick;
     private Bitmap house;
     private Bitmap villa;
-
+    private Paint filler;
+    private Paint filler2;
+    private Paint borderProgress;
     private Bitmap frame1;
     private Bitmap frame2;
     private Bitmap frame3;
@@ -132,8 +134,17 @@ public class Map extends View {
         text.setStyle(Paint.Style.FILL_AND_STROKE);
         text.setColor(Color.BLACK);
         text.setTextSize(size);
-
-
+        filler = new Paint();
+        filler.setStyle(Paint.Style.FILL);
+        filler.setColor(Color.argb(200, 50, 50, 175));
+        filler2 = new Paint();
+        filler2.setStyle(Paint.Style.STROKE);
+        filler2.setStrokeWidth(4);
+        filler2.setColor(Color.argb(125, 250, 250, 250));
+        borderProgress = new Paint();
+        borderProgress.setStyle(Paint.Style.STROKE);
+        borderProgress.setStrokeWidth(4);
+        borderProgress.setColor(Color.argb(250, 60, 60, 60));
     }
 
 
@@ -195,15 +206,26 @@ public class Map extends View {
         ttf.setStyle(Paint.Style.FILL);
         ttf.setColor(Color.argb(200, 200, 20, 20));
         ttf.setTypeface(MainActivity.royalface);
-        ttf.setTextSize(50);
+        ttf.setTextSize(67);
+        canvas.drawText("M", topFrame.left + 25, topFrame.top + 75, ttf);
+
+
+        ttf.setTextSize(57);
 
         canvas.drawText("W", bottomFrame.left + 25, bottomFrame.top + 75, ttf);
+
 
         Paint ttf2 = new Paint();
         ttf2.setStyle(Paint.Style.FILL);
         ttf2.setColor(Color.argb(200, 20, 20, 20));
         ttf2.setTypeface(MainActivity.textFace);
         ttf2.setTextSize(26);
+        ttf2.setFakeBoldText(true);
+
+        canvas.drawText("orus City", topFrame.left + 80, topFrame.top + 70, ttf2);
+        canvas.drawText("Civ. 342", topFrame.left + 30, topFrame.top + 120, ttf2);
+        canvas.drawText("Nothing to see", topFrame.left + 30, topFrame.top + 165, ttf2);
+
         canvas.drawText("anderer i greet you.", bottomFrame.left + 80, bottomFrame.top + 70, ttf2);
         canvas.drawText("Welcome to the World of Morus.", bottomFrame.left + 30, bottomFrame.top + 120, ttf2);
         canvas.drawText("Listen i will tell you a tale.", bottomFrame.left + 30, bottomFrame.top + 170, ttf2);
@@ -228,122 +250,64 @@ public class Map extends View {
         canvas.drawText("nventory", button1.left + 65, button1.top + 75, ttf2);
         canvas.drawText("S", button2.left + 25, button2.top + 75, ttf);
         canvas.drawText("pellbook", button2.left + 75, button2.top + 75, ttf2);
-        canvas.drawText("W", button3.left + 25, button3.top + 75, ttf);
-        canvas.drawText("orldmap", button3.left + 75, button3.top + 75, ttf2);
+        canvas.drawText("M", button3.left + 25, button3.top + 75, ttf);
+        canvas.drawText("ovement", button3.left + 75, button3.top + 75, ttf2);
         canvas.drawText("Q", button4.left + 25, button4.top + 75, ttf);
         canvas.drawText("uit Game", button4.left + 75, button4.top + 75, ttf2);
 
 
-        head1 = new Rect(topFrame.right - (int) (topFrame.width() / 3.5f), topFrame.top + topFrame.height() / 8, topFrame.right - topFrame.width() / 40, topFrame.top + (int)(topFrame.height() / 9.25f) * 3);
+        head1 = new Rect(topFrame.right - (int) (topFrame.width() / 3.5f), topFrame.top + topFrame.height() / 8, topFrame.right - topFrame.width() / 40, topFrame.top + (int) (topFrame.height() / 9.25f) * 3);
         head2 = new Rect(head1.left, head1.bottom, head1.right, head1.bottom + head1.height());
         head3 = new Rect(head2.left, head2.bottom, head2.right, head2.bottom + head2.height());
         head4 = new Rect(head3.left, head3.bottom, head3.right, head3.bottom + head3.height());
 
-        ttf2.setTextSize(20);
-        canvas.drawText("Mana", head1.left, head1.top + 20, ttf2);
-        canvas.drawText("Health", head2.left, head2.top + 20, ttf2);
-        canvas.drawText("Power", head3.left, head3.top + 20, ttf2);
-        canvas.drawText("Exp.", head4.left, head4.top + 20, ttf2);
-
-        Paint borderProgress = new Paint();
-        borderProgress.setStyle(Paint.Style.STROKE);
-        borderProgress.setStrokeWidth(2);
-        borderProgress.setColor(Color.argb(250, 60, 60, 60));
-
-        head1 = new Rect(head1.left + head1.width() / 2, head1.top + head1.height() / 20, head1.right - head1.width() / 30, head1.top + (int) (head1.height() / 1.5f));
-        head2 = new Rect(head2.left + head2.width() / 2, head2.top + head2.height() / 20, head2.right - head2.width() / 30, head2.top + (int) (head2.height() / 1.5f));
-        head3 = new Rect(head3.left + head3.width() / 2, head3.top + head3.height() / 20, head3.right - head3.width() / 30, head3.top + (int) (head3.height() / 1.5f));
-        head4 = new Rect(head4.left + head4.width() / 2, head4.top + head4.height() / 20, head4.right - head4.width() / 30, head4.top + (int) (head4.height() / 1.5f));
+        ttf2.setTextSize(24);
 
 
+        int ac = 150;
+        int ad = 30;
+        head1 = drawTextAndPercentHead(canvas, head1, "Mana", 100, Color.argb(ac+ad, ad,ad,ac), ttf2);
+        head2 = drawTextAndPercentHead(canvas, head2, "Health", 100, Color.argb(ac+ad,ac,ad,ad), ttf2);
+        head3 = drawTextAndPercentHead(canvas, head3, "Power", 100, Color.argb(ac+ad, ad,ac,ad), ttf2);
+        head4 = drawTextAndPercentHead(canvas, head4, "Exp.", 100, Color.argb(ac+ad, ac,ad,ac), ttf2);
+
+
+    }
+
+    private Rect drawTextAndPercentHead(Canvas canvas, Rect head, String text, int percent, int color, Paint drawText) {
+        int round = 2;
+        canvas.drawText(text, head.left, head.top + 24, drawText);
+
+        head = new Rect(head.left + head.width() / 2, head.top + head.height() / 20, head.right - head.width() / 30, head.top + (int) (head.height() / 1.5f));
 
         Path p1 = new Path();
-        p1.addRoundRect(head1.left, head1.top, head1.right, head1.bottom, 4, 4, Path.Direction.CCW);
+        p1.addRoundRect(head.left, head.top, head.right, head.bottom, round, round, Path.Direction.CCW);
         p1.close();
         Path p11 = new Path();
-        p11.addRoundRect(head1.left, head1.top, head1.left+(head1.width()/4f), head1.bottom, 4, 4, Path.Direction.CCW);
+        p11.addRoundRect(head.left, head.top, head.left + (head.width() / 4f), head.bottom, round, round, Path.Direction.CCW);
         p11.close();
 
         Path p111 = new Path();
-        p111.moveTo(head1.left + 2, head1.top + 2);
-        p111.lineTo(head1.right - 2, head1.top + 2);
-        p111.lineTo(head1.right - 2, head1.bottom - 2);
-
-        Path p2 = new Path();
-        p2.addRoundRect(head2.left, head2.top, head2.right, head2.bottom, 4, 4, Path.Direction.CCW);
-        p2.close();
-
-        Path p22 = new Path();
-        p22.addRoundRect(head2.left, head2.top, head2.left + (head2.width() / 1f), head2.bottom, 4, 4, Path.Direction.CCW);
-        p22.close();
-
-        Path p222 = new Path();
-        p222.moveTo(head2.left + 2, head2.top + 2);
-        p222.lineTo(head2.right - 2, head2.top + 2);
-        p222.lineTo(head2.right - 2, head2.bottom - 2);
-
-
-        Path p3 = new Path();
-        p3.addRoundRect(head3.left, head3.top, head3.right, head3.bottom, 4, 4, Path.Direction.CCW);
-        p3.close();
-
-        Path p33 = new Path();
-        p33.addRoundRect(head3.left, head3.top, head3.left+(head3.width()/2f), head3.bottom, 4, 4, Path.Direction.CCW);
-        p33.close();
-
-        Path p333 = new Path();
-        p333.moveTo(head3.left + 2, head3.top + 2);
-        p333.lineTo(head3.right - 2, head3.top + 2);
-        p333.lineTo(head3.right - 2, head3.bottom - 2);
-
-        Path p4 = new Path();
-        p4.addRoundRect(head4.left, head4.top, head4.right, head4.bottom, 4, 4, Path.Direction.CCW);
-        p4.close();
-
-        Path p44 = new Path();
-        p44.addRoundRect(head4.left, head4.top, head4.left + (head4.width() / 8f), head4.bottom, 4, 4, Path.Direction.CCW);
-        p44.close();
-
-        Path p444 = new Path();
-        p444.moveTo(head4.left + 2, head4.top + 2);
-        p444.lineTo(head4.right - 2, head4.top + 2);
-        p444.lineTo(head4.right - 2, head4.bottom - 2);
-
-        Paint filler = new Paint();
-        filler.setStyle(Paint.Style.FILL);
-        filler.setColor(Color.argb(200, 50, 50, 175));
-        Paint filler2 = new Paint();
-        filler2.setStyle(Paint.Style.STROKE);
-        filler2.setStrokeWidth(2);
-        filler2.setColor(Color.argb(100, 250, 250, 250));
+        p111.moveTo(head.left + 2, head.bottom - 2);
+        p111.lineTo(head.left + 2, head.top + 2);
+        p111.lineTo(head.right - 2, head.top + 2);
+        p111.lineTo(head.right - 2, head.bottom - 2);
+        filler.setColor(color);
 
         canvas.drawPath(p11, filler);
         canvas.drawPath(p111, filler2);
         canvas.drawPath(p1, borderProgress);
-        filler.setColor(Color.argb(200, 175, 50, 50));
-        canvas.drawPath(p22, filler);
-        canvas.drawPath(p222, filler2);
-        canvas.drawPath(p2, borderProgress);
-        filler.setColor(Color.argb(200, 50, 175, 50));
-        canvas.drawPath(p33, filler);
-        canvas.drawPath(p333, filler2);
-        canvas.drawPath(p3, borderProgress);
-        filler.setColor(Color.argb(200,175,50,175));
-        canvas.drawPath(p44, filler);
-        canvas.drawPath(p444, filler2);
-        canvas.drawPath(p4,borderProgress);
-
-
+        return head;
     }
 
     private void drawTextBack(Canvas canvas, String text, Rect rc) {
         Paint ttf = new Paint();
         ttf.setStyle(Paint.Style.FILL);
-        ttf.setColor(Color.argb(25, 50, 50, 50));
+        ttf.setColor(Color.argb(25, 100, 100, 100));
         ttf.setTypeface(MainActivity.fairyFace);
         ttf.setTextSize(rc.height() * 1.2f);
 
-        canvas.drawText(text, bottomFrame.centerX() - rc.height() /1.25f, bottomFrame.centerY() + rc.height() / 2.6f, ttf);
+        canvas.drawText(text, bottomFrame.centerX() - rc.height() / 1.25f, bottomFrame.centerY() + rc.height() / 2.6f, ttf);
     }
 
     private Rect drawFrameRect(Rect rc, Canvas canvas, boolean divider, float divAt) {
