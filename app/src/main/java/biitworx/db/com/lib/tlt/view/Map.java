@@ -229,6 +229,13 @@ public class Map extends View {
         canvas.drawText("anderer i greet you.", bottomFrame.left + 80, bottomFrame.top + 70, ttf2);
         canvas.drawText("Welcome to the World of Morus.", bottomFrame.left + 30, bottomFrame.top + 120, ttf2);
         canvas.drawText("Listen i will tell you a tale.", bottomFrame.left + 30, bottomFrame.top + 170, ttf2);
+        canvas.drawText("7Listen i will tell you a tale.", bottomFrame.left + 30, bottomFrame.top + 220, ttf2);
+        canvas.drawText("6Listen i will tell you a tale.", bottomFrame.left + 30, bottomFrame.top + 270, ttf2);
+        canvas.drawText("5Listen i will tell you a tale.", bottomFrame.left + 30, bottomFrame.top + 320, ttf2);
+        canvas.drawText("4Listen i will tell you a tale.", bottomFrame.left + 30, bottomFrame.top + 370, ttf2);
+        canvas.drawText("3Listen i will tell you a tale.", bottomFrame.left + 30, bottomFrame.top + 420, ttf2);
+
+        canvas.drawText("This is the end and should show it.", bottomFrame.left + 30, bottomFrame.top + 470, ttf2);
 
         button1 = new Rect(bottomFrame.right - (int) (bottomFrame.width() / 3.5f), bottomFrame.top + bottomFrame.height() / 10, bottomFrame.right - bottomFrame.width() / 40, bottomFrame.top + (bottomFrame.height() / 10) * 3);
         button1.top -= button1.height() / 4;
@@ -266,10 +273,10 @@ public class Map extends View {
 
         int ac = 150;
         int ad = 30;
-        head1 = drawTextAndPercentHead(canvas, head1, "Mana", 100, Color.argb(ac+ad, ad,ad,ac), ttf2);
+        head1 = drawTextAndPercentHead(canvas, head1, "Mana", 75, Color.argb(ac+ad, ad,ad,ac), ttf2);
         head2 = drawTextAndPercentHead(canvas, head2, "Health", 100, Color.argb(ac+ad,ac,ad,ad), ttf2);
-        head3 = drawTextAndPercentHead(canvas, head3, "Power", 100, Color.argb(ac+ad, ad,ac,ad), ttf2);
-        head4 = drawTextAndPercentHead(canvas, head4, "Exp.", 100, Color.argb(ac+ad, ac,ad,ac), ttf2);
+        head3 = drawTextAndPercentHead(canvas, head3, "Power", 50, Color.argb(ac+ad, ad,ac,ad), ttf2);
+        head4 = drawTextAndPercentHead(canvas, head4, "Exp.", 25, Color.argb(ac+ad, ac,ad,ac), ttf2);
 
 
     }
@@ -284,7 +291,9 @@ public class Map extends View {
         p1.addRoundRect(head.left, head.top, head.right, head.bottom, round, round, Path.Direction.CCW);
         p1.close();
         Path p11 = new Path();
-        p11.addRoundRect(head.left, head.top, head.left + (head.width() / 4f), head.bottom, round, round, Path.Direction.CCW);
+        float cw = (head.right-head.left);
+cw=cw/100f;
+        p11.addRoundRect(head.left, head.top, head.left +(cw*percent), head.bottom, round, round, Path.Direction.CCW);
         p11.close();
 
         Path p111 = new Path();
