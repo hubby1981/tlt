@@ -4,15 +4,16 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import biitworx.db.com.lib.tlt.data.World;
+import biitworx.db.com.lib.tlt.helper.DbHelper;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static DbHelper DATA;
     public static Resources res;
-    public static World world=new World();
+    public static World world = new World();
     public static Bitmap layer0;
     public static Bitmap layer1;
     public static Bitmap layer2;
@@ -26,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        res=getResources();
-
+        res = getResources();
+        DATA = new DbHelper(this);
         fairyFace = Typeface.createFromAsset(this.getAssets(), "tribal.ttf");
         royalface = Typeface.createFromAsset(this.getAssets(), "royal.ttf");
         textFace = Typeface.createFromAsset(this.getAssets(), "text.ttf");

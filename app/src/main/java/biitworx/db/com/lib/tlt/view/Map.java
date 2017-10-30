@@ -23,10 +23,13 @@ import java.util.ArrayList;
 import biitworx.db.com.lib.tlt.MainActivity;
 import biitworx.db.com.lib.tlt.R;
 import biitworx.db.com.lib.tlt.data.Brick;
+import biitworx.db.com.lib.tlt.data.Dragon;
 import biitworx.db.com.lib.tlt.data.GameObject;
 import biitworx.db.com.lib.tlt.data.Grass;
 import biitworx.db.com.lib.tlt.data.GrassStair;
+import biitworx.db.com.lib.tlt.data.Gul;
 import biitworx.db.com.lib.tlt.data.House;
+import biitworx.db.com.lib.tlt.data.Player;
 import biitworx.db.com.lib.tlt.data.PositionRect;
 import biitworx.db.com.lib.tlt.data.Sand;
 import biitworx.db.com.lib.tlt.data.Stone;
@@ -74,6 +77,10 @@ public class Map extends View {
     private Bitmap frame6;
     private Bitmap frame7;
     private Bitmap frame8;
+    private Bitmap player;
+    private Bitmap dragon;
+    private Bitmap gul;
+
     private Rect topFrame;
     private Rect bottomFrame;
     private int size = 70;
@@ -129,7 +136,9 @@ public class Map extends View {
         frame6 = BitmapFactory.decodeResource(MainActivity.res, R.drawable.frame6);
         frame7 = BitmapFactory.decodeResource(MainActivity.res, R.drawable.frame7);
         frame8 = BitmapFactory.decodeResource(MainActivity.res, R.drawable.frame8);
-
+        player = BitmapFactory.decodeResource(MainActivity.res, R.drawable.char02   );
+        dragon = BitmapFactory.decodeResource(MainActivity.res, R.drawable.dragon   );
+        gul = BitmapFactory.decodeResource(MainActivity.res, R.drawable.gul   );
         text = new Paint();
         text.setStyle(Paint.Style.FILL_AND_STROKE);
         text.setColor(Color.BLACK);
@@ -147,6 +156,15 @@ public class Map extends View {
         borderProgress.setColor(Color.argb(250, 60, 60, 60));
     }
 
+
+    public Bitmap getFromPlayer(int x,int y){
+        Bitmap bit = Bitmap.createBitmap(32,35, Bitmap.Config.ARGB_4444);
+        Canvas c = new Canvas(bit);
+        x*=32;
+        y*=35;
+        c.drawBitmap(player,new Rect(x,y,x+32,y+35),new Rect(0,0,32,35),null);
+        return bit;
+    }
 
     @Override
     public void onDraw(Canvas canvas) {
@@ -382,6 +400,7 @@ cw=cw/100f;
 
         for (PositionRect rc : layer) {
 
+
             GameObject go = MainActivity.world.get(index, x + rc.getX(), y + rc.getY());
             if (go != null) {
                 if (go.getClass() == Stone.class) {
@@ -422,6 +441,18 @@ cw=cw/100f;
                         } else if (go2.getClass() == Villa.class) {
                             RectF from = new RectF(rc.getPos().left, rc.getPos().top - rc.getPos().height() / 2, rc.getPos().right, rc.getPos().bottom - rc.getPos().height() / 2);
                             canvas.drawBitmap(villa, null, from, null);
+                        }
+                        else if (go2.getClass() == Dragon.class) {
+                            RectF from = new RectF(rc.getPos().left, rc.getPos().top - rc.getPos().height() / 1.5f, rc.getPos().right, rc.getPos().bottom - rc.getPos().height() / 1.5f);
+                            canvas.drawBitmap(dragon, null, from, null);
+                        }
+                        else if (go2.getClass() == Gul.class) {
+                            RectF from = new RectF(rc.getPos().left, rc.getPos().top - rc.getPos().height() / 1.5f, rc.getPos().right, rc.getPos().bottom - rc.getPos().height() / 1.5f);
+                            canvas.drawBitmap(gul, null, from, null);
+                        }
+                        else if (go2.getClass() == Player.class) {
+                            RectF from = new RectF(rc.getPos().centerX() - rc.getPos().width() / 4, rc.getPos().centerY() - rc.getPos().height() / 1.45f, rc.getPos().centerX() + rc.getPos().width() / 4, (rc.getPos().centerY() - rc.getPos().height() /1.45f) + rc.getPos().width() / 2);
+                            canvas.drawBitmap(getFromPlayer(1,2), null, from, null);
                         }
                     }
                 }

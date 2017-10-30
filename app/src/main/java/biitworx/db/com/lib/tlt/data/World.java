@@ -11,7 +11,7 @@ public class World {
     public static int dimens = 512;
     public static int worldX=0;
     public static int worldY=0;
-    public static Player player = new Player();
+
 
     public void generate() {
         layers.add(new Layer(dimens,0));
@@ -19,6 +19,10 @@ public class World {
         layers.add(new Layer(dimens,2));
         layers.add(new Layer(dimens,3));
         layers.add(new Layer(dimens,4));
+        layers.get(4).get(2,2).getObjects().add(new Player());
+
+        layers.get(4).get(4,5).getObjects().add(new Dragon());
+        layers.get(4).get(2,6).getObjects().add(new Gul());
 
     }
 
