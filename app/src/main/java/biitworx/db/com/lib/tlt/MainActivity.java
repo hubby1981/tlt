@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
         fairyFace = Typeface.createFromAsset(this.getAssets(), "tribal.ttf");
         royalface = Typeface.createFromAsset(this.getAssets(), "royal.ttf");
         textFace = Typeface.createFromAsset(this.getAssets(), "text.ttf");
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig=Bitmap.Config.ARGB_8888;
+
 
         layer0 = BitmapFactory.decodeResource(MainActivity.res, R.drawable.layer0);
         layer1 = BitmapFactory.decodeResource(MainActivity.res, R.drawable.layer1);

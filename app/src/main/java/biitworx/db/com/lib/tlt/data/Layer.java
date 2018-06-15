@@ -23,9 +23,9 @@ public class Layer {
 
             for (int x = 0; x < dimens; x++) {
 
-                GameObject o =null;/* generate(x,y);
+                GameObject o = generate(x,y);
                 if(o!=null)
-                    o.name = x + "." + y;*/
+                    o.name = x + "." + y;
                 obj.add(o);
             }
             objects.add(obj);
